@@ -1,0 +1,12 @@
+version: "3.6"
+services:
+  summerhouse_rack:
+    image: openwrtorg/imagebuilder:ramips-mt7621-19.07.1
+    volumes:
+      - ./files:/mnt/files/
+      - ./output:/mnt/output/
+    command: >
+      make image 
+      BIN_DIR="/mnt/output"
+      PACKAGES="uhttpd rpcd-mod-file uhttpd-mod-ubus libiwinfo-lua luci-base luci-app-firewall luci-mod-admin-full luci-theme-bootstrap  -ppp -ppp-mod-pppoe -ip6tables -odhcp6c -kmod-ipv6 -kmod-ip6tables -odhcpd-ipv6only comgt-ncm kmod-usb-net-huawei-cdc-ncm luci-proto-ncm usb-modeswitch mosquitto-nossl" 
+      PROFILE=xiaomi_mir3g
