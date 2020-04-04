@@ -9,6 +9,6 @@ services:
       make image 
       FILES="/mnt/files/" 
       BIN_DIR="/mnt/output"
-      PACKAGES="uhttpd rpcd-mod-file uhttpd-mod-ubus libiwinfo-lua luci-base luci-app-firewall luci-mod-admin-full luci-theme-bootstrap  -ppp -ppp-mod-pppoe -ip6tables -odhcp6c -kmod-ipv6 -kmod-ip6tables -odhcpd-ipv6only -dnsmasq" 
+      PACKAGES="uhttpd rpcd-mod-file uhttpd-mod-ubus libiwinfo-lua luci-base luci-app-firewall luci-mod-admin-full luci-theme-bootstrap  -ppp -ppp-mod-pppoe -ip6tables -odhcp6c -kmod-ipv6 -kmod-ip6tables -odhcpd-ipv6only -dnsmasq vim tcpdump" 
       PROFILE=xiaomi_mir3g
 
