@@ -13,12 +13,13 @@ services:
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} rpcd-mod-file -dnsmasq"
       PROFILE=xiaomi_mir3g
   summerhouse_rack:
-    image: openwrtorg/imagebuilder:ramips-mt7621-19.07.1
+    image: openwrtorg/imagebuilder:ramips-mt7621-19.07-SNAPSHOT
     volumes:
+      - ./files/summerhouse_rack:/mnt/files/
       - ./output:${OUTPUT_DIR}
     command: >
       make image 
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="summerhouse_rack"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_NCM_MODEM} mosquitto-nossl snmpd" 
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_NCM_MODEM} mosquitto-nossl snmpd rpcd-mod-file" 
       PROFILE=xiaomi_mir3g
