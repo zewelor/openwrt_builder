@@ -1,5 +1,9 @@
+define run_compose_target
+	docker-compose pull $(1) && docker-compose run $(1)
+endef
+
 x1:
-	docker-compose run x1
+	$(call run_compose_target,x1)
 
 summerhouse_rack:
-	docker-compose run summerhouse_rack
+	$(call run_compose_target,summerhouse_rack)
