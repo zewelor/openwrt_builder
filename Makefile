@@ -1,5 +1,5 @@
 define run_compose_target
-	docker-compose pull $(1) && docker-compose run $(1)
+	docker-compose pull $(1) && docker-compose run --rm $(1)
 endef
 
 x1:
