@@ -23,5 +23,5 @@ services:
       BIN_DIR="${OUTPUT_DIR}"
       FILES="/mnt/files/" 
       EXTRA_IMAGE_NAME="summerhouse_rack"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_NCM_MODEM} ${PACKAGES_VPN} mosquitto-nossl snmpd rpcd-mod-file netcat"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_NCM_MODEM} ${PACKAGES_VPN} mosquitto-nossl snmpd rpcd-mod-file netcat ca-bundle luci-app-unbound luci-app-adblock libustream-mbedtls unbound-control odhcpd block-mount e2fsprogs kmod-fs-ext4 kmod-usb-storage -dnsmasq -odhcpd-ipv6only"
       PROFILE=xiaomi_mir3g
