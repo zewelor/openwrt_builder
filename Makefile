@@ -2,11 +2,22 @@ define run_compose_target
 	docker-compose pull $(1) ; docker-compose run --rm $(1)
 endef
 
-x1:
-	$(call run_compose_target,x1)
+BASE=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
+
+all: clean michal_ap summerhouse_rack x0
+
+michal_ap:
+	$(call run_compose_target,$@)
 
 summerhouse_rack:
-	$(call run_compose_target,summerhouse_rack)
+	$(call run_compose_target,$@)
+
+x0:
+	$(call run_compose_target,$@)
 
 build_new_builder:
-	cd openwrt-docker-builder ; BRANCH=19.07-SNAPSHOT TARGET=ramips-mt7621 ./docker-imagebuilder.sh
+	# apt-get install signify-openbsd
+	cd openwrt-docker-builder ; BRANCH=19.07.3 TARGET=ramips-mt7621 GNUPGHOME=~/.gnupg/ ./docker-imagebuilder.sh
+
+clean:
+	rm -rf ${BASE}output/*

@@ -1,20 +1,26 @@
 version: "3.4"
+
+# networks:
+#     default:
+#       external: true
+#       name: host
+
 services:
-  x1:
-    image: openwrtorg/imagebuilder:ramips-mt7621-19.07-SNAPSHOT
+  michal_ap:
+    image: openwrtorg/imagebuilder:ramips-mt7621-19.07.3
     volumes:
-      - ./files/x1:/mnt/files/
+      - ./files/michal_ap:/mnt/files/
       - ./output:${OUTPUT_DIR}
     command: >
       make image 
       FILES="/mnt/files/" 
       BIN_DIR="${OUTPUT_DIR}"
-      EXTRA_IMAGE_NAME="x1"
+      EXTRA_IMAGE_NAME="michal_ap"
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} rpcd-mod-file -dnsmasq"
       PROFILE=xiaomi_mir3g
   summerhouse_rack:
-    # image: openwrtorg/imagebuilder:ramips-mt7621-19.07-SNAPSHOT
-    image: openwrt-imagebuilder:ramips-mt7621-19.07-SNAPSHOT
+    image: openwrtorg/imagebuilder:ramips-mt7621-19.07.3
+    # image: openwrt-imagebuilder:ramips-mt7621-19.07.3
     volumes:
       - ./files/summerhouse_rack:/mnt/files/
       - ./output:${OUTPUT_DIR}
@@ -23,5 +29,16 @@ services:
       BIN_DIR="${OUTPUT_DIR}"
       FILES="/mnt/files/" 
       EXTRA_IMAGE_NAME="summerhouse_rack"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_NCM_MODEM} ${PACKAGES_VPN} mosquitto-nossl snmpd rpcd-mod-file netcat ca-bundle luci-app-unbound luci-app-adblock libustream-mbedtls unbound-control odhcpd -dnsmasq -odhcpd-ipv6only wireguard kmod-wireguard luci-app-wireguard"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_NCM_MODEM} ${PACKAGES_VPN} mosquitto-nossl snmpd rpcd-mod-file netcat ca-bundle luci-app-unbound luci-app-adblock libustream-mbedtls unbound-control odhcpd -dnsmasq -odhcpd-ipv6only"
       PROFILE=xiaomi_mir3g
+  x0:
+    image: openwrtorg/imagebuilder:ramips-mt7621-19.07.3
+    volumes:
+      # - ./files/summerhouse_rack:/mnt/files/
+      - ./output:${OUTPUT_DIR}
+    command: >
+      make image 
+      BIN_DIR="${OUTPUT_DIR}"
+      EXTRA_IMAGE_NAME="x0"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_VPN}"
+      PROFILE=ubnt-erx
