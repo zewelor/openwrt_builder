@@ -16,7 +16,7 @@ services:
       FILES="/mnt/files/" 
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="michal_ap"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} rpcd-mod-file -dnsmasq"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_COLLECTD} rpcd-mod-file -dnsmasq"
       PROFILE=xiaomi_mir3g
   summerhouse_rack:
     image: openwrtorg/imagebuilder:ramips-mt7621-19.07.4
@@ -29,7 +29,7 @@ services:
       BIN_DIR="${OUTPUT_DIR}"
       FILES="/mnt/files/" 
       EXTRA_IMAGE_NAME="summerhouse_rack"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_NCM_MODEM} ${PACKAGES_VPN} mosquitto-nossl snmpd rpcd-mod-file netcat ca-bundle luci-app-unbound luci-app-adblock libustream-mbedtls unbound-control odhcpd -dnsmasq -odhcpd-ipv6only kmod-nf-nathelper-extra"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_NCM_MODEM} ${PACKAGES_VPN} ${PACKAGES_COLLECTD} mosquitto-nossl snmpd rpcd-mod-file netcat ca-bundle luci-app-unbound luci-app-adblock libustream-mbedtls unbound-control odhcpd -dnsmasq -odhcpd-ipv6only kmod-nf-nathelper-extra"
       PROFILE=xiaomi_mir3g
   x0:
     image: openwrtorg/imagebuilder:ramips-mt7621-19.07.4
@@ -40,5 +40,5 @@ services:
       make image 
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="x0"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_VPN}"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_VPN} ${PACKAGES_COLLECTD}"
       PROFILE=ubnt-erx
