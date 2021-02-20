@@ -7,7 +7,7 @@ version: "3.4"
 
 services:
   michal_ap:
-    image: openwrtorg/imagebuilder:ramips-mt7621-19.07.5
+    image: openwrtorg/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:
       - ./files/michal_ap:/mnt/files/
       - ./output:${OUTPUT_DIR}
@@ -19,7 +19,7 @@ services:
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_COLLECTD} rpcd-mod-file -dnsmasq"
       PROFILE=xiaomi_mir3g
   summerhouse_rack:
-    image: openwrtorg/imagebuilder:ramips-mt7621-19.07.5
+    image: openwrtorg/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     # image: openwrt-imagebuilder:ramips-mt7621-19.07.3
     volumes:
       - ./files/summerhouse_rack:/mnt/files/
@@ -32,7 +32,7 @@ services:
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_NCM_MODEM} ${PACKAGES_VPN} ${PACKAGES_COLLECTD} mosquitto-nossl snmpd rpcd-mod-file netcat ca-bundle luci-app-unbound luci-app-adblock libustream-mbedtls unbound-control odhcpd -dnsmasq -odhcpd-ipv6only kmod-nf-nathelper-extra"
       PROFILE=xiaomi_mir3g
   x0:
-    image: openwrtorg/imagebuilder:ramips-mt7621-19.07.5
+    image: openwrtorg/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:
       # - ./files/summerhouse_rack:/mnt/files/
       - ./output:${OUTPUT_DIR}
