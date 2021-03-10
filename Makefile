@@ -4,9 +4,13 @@ endef
 
 BASE=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
-all: clean michal_ap summerhouse_rack x0
+# all: clean ap_michal ap_basement summerhouse_rack x0
+all: clean ap_michal summerhouse_rack x0
 
-michal_ap:
+ap_michal:
+	$(call run_compose_target,$@)
+
+ap_basement:
 	$(call run_compose_target,$@)
 
 summerhouse_rack:
@@ -15,9 +19,9 @@ summerhouse_rack:
 x0:
 	$(call run_compose_target,$@)
 
-build_new_builder:
-	# apt-get install signify-openbsd
-	cd openwrt-docker-builder ; BRANCH=19.07.3 TARGET=ramips-mt7621 GNUPGHOME=~/.gnupg/ ./docker-imagebuilder.sh
+# build_new_builder:
+# 	# apt-get install signify-openbsd
+# 	cd openwrt-docker-builder ; BRANCH=19.07.3 TARGET=ramips-mt7621 GNUPGHOME=~/.gnupg/ ./docker-imagebuilder.sh
 
 clean:
 	rm -rf ${BASE}output/*
