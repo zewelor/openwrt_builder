@@ -17,23 +17,33 @@ services:
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="ap_michal"
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_PROMETHEUS} rpcd-mod-file -dnsmasq"
-      PROFILE=xiaomi_mir3g
+      PROFILE=xiaomi_mi-router-3g
   ap_basement:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:
       - ./files/ap_basement:/mnt/files/
       - ./output:${OUTPUT_DIR}
     command: >
-      make info
-      # make image 
-      # FILES="/mnt/files/" 
-      # BIN_DIR="${OUTPUT_DIR}"
-      # EXTRA_IMAGE_NAME="ap_basement"
-      # PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_COLLECTD} rpcd-mod-file -dnsmasq"
-      # PROFILE=xiaomi_mir4a-gigabit
+      make image 
+      FILES="/mnt/files/" 
+      BIN_DIR="${OUTPUT_DIR}"
+      EXTRA_IMAGE_NAME="ap_basement"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_PROMETHEUS} rpcd-mod-file -dnsmasq"
+      PROFILE=xiaomi_mi-router-4a-gigabit
+  parents:
+    image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
+    volumes:
+      - ./files/parents:/mnt/files/
+      - ./output:${OUTPUT_DIR}
+    command: >
+      make image 
+      FILES="/mnt/files/" 
+      BIN_DIR="${OUTPUT_DIR}"
+      EXTRA_IMAGE_NAME="parents"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_PROMETHEUS} ${PACKAGES_VPN}"
+      PROFILE=xiaomi_mi-router-4a-gigabit
   summerhouse_rack:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
-    # image: openwrt-imagebuilder:ramips-mt7621-19.07.3
     volumes:
       - ./files/summerhouse_rack:/mnt/files/
       - ./output:${OUTPUT_DIR}
@@ -42,8 +52,8 @@ services:
       BIN_DIR="${OUTPUT_DIR}"
       FILES="/mnt/files/" 
       EXTRA_IMAGE_NAME="summerhouse_rack"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_NCM_MODEM} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} mosquitto-nossl snmpd rpcd-mod-file netcat ca-bundle luci-app-unbound luci-app-adblock libustream-mbedtls unbound-control odhcpd -dnsmasq -odhcpd-ipv6only kmod-nf-nathelper-extra"
-      PROFILE=xiaomi_mir3g
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_NCM_MODEM} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} mosquitto-nossl snmpd rpcd-mod-file netcat ca-bundle luci-app-unbound luci-app-adblock unbound-control odhcpd -dnsmasq -odhcpd-ipv6only kmod-nf-nathelper-extra"
+      PROFILE=xiaomi_mi-router-3g
   x0:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:

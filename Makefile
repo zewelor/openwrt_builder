@@ -5,7 +5,7 @@ endef
 BASE=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
 # all: clean ap_michal ap_basement summerhouse_rack x0
-all: clean ap_michal summerhouse_rack x0
+all: clean ap_michal ap_basement parents summerhouse_rack x0
 
 ap_michal:
 	$(call run_compose_target,$@)
@@ -17,6 +17,9 @@ summerhouse_rack:
 	$(call run_compose_target,$@)
 
 x0:
+	$(call run_compose_target,$@)
+
+parents:
 	$(call run_compose_target,$@)
 
 # build_new_builder:
