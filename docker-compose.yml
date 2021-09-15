@@ -1,10 +1,5 @@
 version: "3.4"
 
-# networks:
-#     default:
-#       external: true
-#       name: host
-
 services:
   ap_michal:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
@@ -64,4 +59,4 @@ services:
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="x0"
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS}"
-      PROFILE=ubnt-erx
+      PROFILE=ubnt_edgerouter-x
