@@ -1,0 +1,26 @@
+name: Docker Checks
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  dockerized_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Run tests
+        env:
+          DOCKER_BUILDKIT: 1
+          COMPOSE_DOCKER_CLI_BUILD: 1
+        run: |
+          make
+      - name: Archive output artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: sysupgrade-files
+          path: |
+            output/*.sysupgrade.bin
+
