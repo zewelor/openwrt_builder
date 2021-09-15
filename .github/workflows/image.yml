@@ -11,12 +11,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Run tests
+      - name: Build all images
         env:
           DOCKER_BUILDKIT: 1
           COMPOSE_DOCKER_CLI_BUILD: 1
         run: |
-          ls -lah
+          chmod output a+w
           make
       - name: Archive output artifacts
         uses: actions/upload-artifact@v2
