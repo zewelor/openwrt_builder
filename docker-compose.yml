@@ -11,7 +11,7 @@ services:
       FILES="/mnt/files/" 
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="ap_michal"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_PROMETHEUS} rpcd-mod-file -dnsmasq"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_PROMETHEUS} ${PACKAGES_UBUS_HA_SCANNER} -dnsmasq"
       PROFILE=xiaomi_mi-router-3g
   ap_basement:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
@@ -23,7 +23,7 @@ services:
       FILES="/mnt/files/" 
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="ap_basement"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_PROMETHEUS} rpcd-mod-file -dnsmasq"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_LUCI} ${PACKAGES_REMOVE_PPP} ${PACKAGES_REMOVE_IPV6} ${PACKAGES_PROMETHEUS} ${PACKAGES_UBUS_HA_SCANNER} -dnsmasq"
       PROFILE=xiaomi_mi-router-4a-gigabit
   parents:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
