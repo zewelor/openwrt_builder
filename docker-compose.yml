@@ -42,6 +42,7 @@ services:
     volumes:
       - ./files/summerhouse_rack:/mnt/files/
       - ./output:${OUTPUT_DIR}
+    # kmod-nf-nathelper-extra for pptp passthrough https://forum.openwrt.org/t/solved-ar71xx-kernel-4-9-pptp-passthrough-not-working-tl-wr942n-v1/11162/15
     command: >
       make image 
       BIN_DIR="${OUTPUT_DIR}"
