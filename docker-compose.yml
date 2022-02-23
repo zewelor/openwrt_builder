@@ -1,5 +1,3 @@
-version: "3.4"
-
 services:
   ap_michal:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
