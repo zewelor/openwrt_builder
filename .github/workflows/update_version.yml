@@ -2,7 +2,7 @@ name: update_version
 
 on:
   schedule:
-    - cron: "0 19 * * *" 
+    - cron: "0 5 */7 * *" 
   workflow_dispatch:
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
         run: |
           set -xe
 
-          curl -sL https://api.github.com/repos/openwrt/openwrt/releases  | grep "name" | head -1 | cut -d '"' -f 4 > VERSION
+          curl -sL https://api.github.com/repos/openwrt/openwrt/releases  | grep '"name":' | head -1 | cut -d '"' -f 4 > VERSION
           VERSION=$(cat VERSION)
           git add VERSION
 
