@@ -1,0 +1,38 @@
+name: update_version
+
+on:
+  schedule:
+    - cron: "0 19 * * *" 
+  workflow_dispatch:
+
+jobs:
+  update_version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup git
+        run: |
+          git config push.default current
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+      - name: Update VERSION
+        run: |
+          set -xe
+
+          curl -sL https://api.github.com/repos/openwrt/openwrt/releases  | grep "tag_name" | head -1 | cut -d '"' -f 4 | cut -f 2 -d 'v' > VERSION
+          VERSION=$(cat VERSION)
+          git add VERSION
+
+          sed -i -e "s/OPENWRT_VERSION=.*$/OPENWRT_VERSION=${VERSION}/g" .env
+          git add .env
+
+          set +e
+          git commit -m "Bump version ${VERSION} from GitHub Actions"
+          git tag -a ${VERSION} -m "Release ${VERSION}"
+          git push origin --tags
+          set -e
+
+          git push origin
