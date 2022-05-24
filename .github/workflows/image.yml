@@ -21,9 +21,10 @@ jobs:
           make
           ls -lah output
       - name: Archive output artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: sysupgrade-files
+          retention-days: 30
           path: |
             output/**/*-sysupgrade.bin
 
