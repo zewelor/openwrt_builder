@@ -18,11 +18,18 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
 
+      - id: latest_version
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          owner: openwrt
+          repo: openwrt
+          excludes: prerelease, draft
+
       - name: Update VERSION
         run: |
           set -xe
 
-          curl -sL https://api.github.com/repos/openwrt/openwrt/releases  | grep '"name":' | head -1 | cut -d '"' -f 4 > VERSION
+          echo "${{ steps.latest_version.outputs.release }}" > VERSION
           VERSION=$(cat VERSION)
           git add VERSION
 
