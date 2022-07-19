@@ -46,7 +46,7 @@ services:
       BIN_DIR="${OUTPUT_DIR}"
       FILES="/mnt/files/" 
       EXTRA_IMAGE_NAME="summerhouse_rack"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_NCM_MODEM} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} ${PACKAGES_UBUS_HA_SCANNER} mosquitto-nossl snmpd netcat ca-bundle luci-app-unbound luci-app-adblock unbound-control odhcpd -dnsmasq -odhcpd-ipv6only"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_NCM_MODEM} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} ${PACKAGES_UBUS_HA_SCANNER} mosquitto-nossl netcat ca-bundle luci-app-unbound luci-app-adblock unbound-control odhcpd -dnsmasq -odhcpd-ipv6only"
       PROFILE=xiaomi_mi-router-3g
   x0:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
