@@ -1,6 +1,6 @@
 services:
   ap_michal:
-    image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
+    image: openwrt/imagebuilder:mediatek-mt7622-${OPENWRT_VERSION}
     volumes:
       - ./files/ap_michal:/mnt/files/
       - ./output:${OUTPUT_DIR}
@@ -10,7 +10,7 @@ services:
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="ap_michal"
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_NON_ROUTER} ${PACKAGES_PROMETHEUS}"
-      PROFILE=xiaomi_mi-router-3g
+      PROFILE=xiaomi_redmi-router-ax6s
   ap_basement:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:
