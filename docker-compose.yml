@@ -33,7 +33,7 @@ services:
       FILES="/mnt/files/" 
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="parents"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_PROMETHEUS} ${PACKAGES_VPN}"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_PROMETHEUS} ${PACKAGES_VPN} ${PACKAGES_REMOVE_IPV6}"
       PROFILE=xiaomi_mi-router-4a-gigabit
   summerhouse_rack:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
