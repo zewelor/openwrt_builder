@@ -11,7 +11,7 @@ ifneq (,$(wildcard ./.env))
 endif
 
 # all: clean ap_michal ap_basement summerhouse_rack x0
-all: clean ap_michal ap_basement parents summerhouse_rack x0
+all: clean ap_michal ap_basement parents_router summerhouse_router x0
 
 ap_michal:
 	$(call run_compose_target,$@)
@@ -19,7 +19,7 @@ ap_michal:
 ap_basement:
 	$(call run_compose_target,$@)
 
-summerhouse_rack:
+summerhouse_router:
 	$(call run_compose_target,$@)
 
 # travel_router:
@@ -28,7 +28,7 @@ summerhouse_rack:
 x0:
 	$(call run_compose_target,$@)
 
-parents:
+parents_router:
 	$(call run_compose_target,$@)
 
 # build_new_builder:

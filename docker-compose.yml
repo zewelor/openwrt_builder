@@ -25,7 +25,7 @@ services:
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_NON_ROUTER} ${PACKAGES_PROMETHEUS}"
       PROFILE=xiaomi_mi-router-4a-gigabit
       DISABLED_SERVICES="firewall"
-  parents:
+  parents_router:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:
       - ./files/parents:/mnt/files/
@@ -34,10 +34,10 @@ services:
       make image 
       FILES="/mnt/files/" 
       BIN_DIR="${OUTPUT_DIR}"
-      EXTRA_IMAGE_NAME="parents"
+      EXTRA_IMAGE_NAME="parents_router"
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_PROMETHEUS} ${PACKAGES_VPN} ${PACKAGES_REMOVE_IPV6}"
       PROFILE=xiaomi_mi-router-4a-gigabit
-  summerhouse_rack:
+  summerhouse_router:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:
       - ./files/summerhouse_rack:/mnt/files/
@@ -47,7 +47,7 @@ services:
       make image 
       BIN_DIR="${OUTPUT_DIR}"
       FILES="/mnt/files/" 
-      EXTRA_IMAGE_NAME="summerhouse_rack"
+      EXTRA_IMAGE_NAME="summerhouse_router"
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} ${PACKAGES_UBUS_HA_SCANNER} mosquitto-nossl netcat ca-bundle luci-app-unbound luci-app-adblock unbound-control odhcpd -dnsmasq -odhcpd-ipv6only"
       PROFILE=xiaomi_mi-router-3g
   # Migrated to glinet and uses its firmware for now
