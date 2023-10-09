@@ -3,7 +3,7 @@
 # */2 * * * * /root/internet-keep-alive/internet-keep-alive.sh
 
 DIR=$( cd $(dirname $0) ; pwd -P )
-LOG_FILE="/tmp/log.txt"
+LOG_FILE="/tmp/keepalive.txt"
 
 OFFLINE_COUNT=$(cat $LOG_FILE | tail -4 | grep OFFLINE | wc -l)
 OFFLINE_COUNT_TRESHOLD=4
