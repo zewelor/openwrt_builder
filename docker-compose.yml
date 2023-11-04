@@ -35,6 +35,7 @@ services:
       FILES="/mnt/files/" 
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="parents_router"
+      CONFIG_IPV6=n
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_PROMETHEUS} ${PACKAGES_VPN} ${PACKAGES_REMOVE_IPV6}"
       PROFILE=xiaomi_mi-router-4a-gigabit
   summerhouse_router:
@@ -48,7 +49,8 @@ services:
       BIN_DIR="${OUTPUT_DIR}"
       FILES="/mnt/files/" 
       EXTRA_IMAGE_NAME="summerhouse_router"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} ${PACKAGES_UBUS_HA_SCANNER} mosquitto-nossl netcat ca-bundle luci-app-unbound luci-app-adblock unbound-control odhcpd -dnsmasq -odhcpd-ipv6only"
+      CONFIG_IPV6=n
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} ${PACKAGES_UBUS_HA_SCANNER} mosquitto-nossl netcat ca-bundle luci-app-unbound luci-app-adblock unbound-control odhcpd -dnsmasq -odhcpd-ipv6only ${PACKAGES_REMOVE_IPV6}"
       PROFILE=xiaomi_mi-router-3g
   # Migrated to glinet and uses its firmware for now
   # travel_router:
