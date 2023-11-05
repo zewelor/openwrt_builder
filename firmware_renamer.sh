@@ -24,7 +24,9 @@ NEW_NAME_PART=$(echo "$1" | sed 's/[-_]/-/g')
 SUFFIX="sysupgrade.bin"
 
 # Construct the file pattern
-PATTERN="*$(echo "$1" | sed 's/[-_]/\*/g')*.bin"
+PATTERN="*$(echo "$1" | sed 's/[-_]/\?/g')*${SUFFIX}"
+
+echo "Looking for files matching the pattern '${PATTERN}' in the directory '${DIR}'"
 
 # Find the file with the old pattern
 FILE_TO_RENAME=$(find "${DIR}" -type f -name "${PATTERN}" -print -quit)
@@ -38,4 +40,4 @@ fi
 # Rename the file
 mv "${FILE_TO_RENAME}" "${DIR}/${NEW_NAME_PART}-${SUFFIX}"
 
-echo "File has been renamed to ${NEW_NAME_PART}-${SUFFIX}"
+echo "${FILE_TO_RENAME} -> ${NEW_NAME_PART}-${SUFFIX}"
