@@ -35,11 +35,5 @@ parents_router:
 # 	# apt-get install signify-openbsd
 # 	cd openwrt-docker-builder ; BRANCH=19.07.3 TARGET=ramips-mt7621 GNUPGHOME=~/.gnupg/ ./docker-imagebuilder.sh
 
-install_ap_basement:
-	scp output/openwrt-${OPENWRT_VERSION}-ap-basement-ramips-mt7621-xiaomi_mi-router-4a-gigabit-squashfs-sysupgrade.bin ap-basement:/tmp/sysupgrade.bin && ssh ap-basement -t "sysupgrade -q /tmp/sysupgrade.bin"
-
-install_ap_michal:
-	scp output/openwrt-${OPENWRT_VERSION}-ap-michal-mediatek-mt7622-xiaomi_redmi-router-ax6s-squashfs-sysupgrade.bin ap-michal:/tmp/sysupgrade.bin && ssh ap-michal -t "sysupgrade -q /tmp/sysupgrade.bin"
-
 clean:
 	rm -rf ${BASE}output/*

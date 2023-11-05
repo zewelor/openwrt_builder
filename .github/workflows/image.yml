@@ -18,15 +18,20 @@ jobs:
           COMPOSE_DOCKER_CLI_BUILD: 1
         run: |
           chmod a+w output
-          make x0
+          make
           ls -lah output
       # I wanto to register to github env value of file VERSION
       - name: Read VERSION file
         id: read_version
         run: echo "openwrt_version=$(cat VERSION)" >> $GITHUB_OUTPUT
+      - name: Rename output files for release
+        run: |
+          grep -E '^[[:space:]]*[^#[:space:]]' docker-compose.yml | grep 'EXTRA_IMAGE_NAME' | awk -F\" '{print $2}' | while IFS= read -r line; do
+            ./firmware_renamer.sh "${line}"
+          done
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "output/**/*-sysupgrade.bin"
+          artifacts: "output/*-sysupgrade.bin"
           allowUpdates: true
           makeLatest: true
           tag: ${{ steps.read_version.outputs.openwrt_version }}
