@@ -18,7 +18,7 @@ jobs:
           COMPOSE_DOCKER_CLI_BUILD: 1
         run: |
           chmod a+w output
-          make
+          make x0
           ls -lah output
       # I wanto to register to github env value of file VERSION
       - name: Read VERSION file
@@ -30,3 +30,4 @@ jobs:
           allowUpdates: true
           makeLatest: true
           tag: ${{ steps.read_version.outputs.openwrt_version }}
+          token: ${{ secrets.PAT }}
