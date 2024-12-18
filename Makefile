@@ -4,6 +4,8 @@ endef
 
 BASE=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 
+SERVICES := $(shell docker compose config --services)
+
 # Include .env
 ifneq (,$(wildcard ./.env))
 	include .env
@@ -11,7 +13,7 @@ ifneq (,$(wildcard ./.env))
 endif
 
 # all: clean ap_michal ap_basement summerhouse_rack x0
-all: clean ap_michal ap_basement parents_router summerhouse_router x0
+all: clean $(SERVICES)
 
 ap_michal:
 	$(call run_compose_target,$@)
