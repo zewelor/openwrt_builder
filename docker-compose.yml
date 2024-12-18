@@ -48,7 +48,7 @@ services:
       BIN_DIR="${OUTPUT_DIR}"
       FILES="/mnt/files/" 
       EXTRA_IMAGE_NAME="summerhouse_router"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} ${PACKAGES_UBUS_HA_SCANNER} mosquitto-nossl netcat ca-bundle luci-app-unbound luci-app-adblock unbound-control unbound-checkconf odhcpd -dnsmasq -odhcpd-ipv6only"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} ${PACKAGES_UBUS_HA_SCANNER} mosquitto-nossl ca-bundle luci-app-unbound luci-app-adblock unbound-control unbound-checkconf odhcpd -dnsmasq -odhcpd-ipv6only"
       PROFILE=xiaomi_mi-router-3g
   # Migrated to glinet and uses its firmware for now
   # travel_router:
@@ -74,5 +74,16 @@ services:
       EXTRA_IMAGE_NAME="x0"
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} ddns-scripts luci-app-ddns avahi-daemon luci-app-wol ip mwan3 luci-app-mwan3"
       PROFILE=ubnt_edgerouter-x
+  portosanto:
+    image: openwrt/imagebuilder:mediatek-filogic-${OPENWRT_VERSION}
+    volumes:
+      - ./output:${OUTPUT_DIR}
+    command: >
+      make image
+      FILES="/mnt/files/"
+      BIN_DIR="${OUTPUT_DIR}"
+      EXTRA_IMAGE_NAME="portosanto_router"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_PROMETHEUS} ${PACKAGES_VPN}"
+      PROFILE=glinet_gl-mt6000
   # porto_santo:
   # mediatek/filogic/ - glinet_gl-mt6000
