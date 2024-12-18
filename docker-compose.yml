@@ -74,7 +74,7 @@ services:
       EXTRA_IMAGE_NAME="x0"
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} ddns-scripts luci-app-ddns avahi-daemon luci-app-wol ip mwan3 luci-app-mwan3"
       PROFILE=ubnt_edgerouter-x
-  portosanto:
+  portosanto_router:
     image: openwrt/imagebuilder:mediatek-filogic-${OPENWRT_VERSION}
     volumes:
       - ./output:${OUTPUT_DIR}
