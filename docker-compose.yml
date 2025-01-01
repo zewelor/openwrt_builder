@@ -72,7 +72,7 @@ services:
       make image 
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="x0"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} avahi-daemon luci-app-wol ip mwan3 luci-app-mwan3"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} avahi-daemon luci-app-wol ip"
       PROFILE=ubnt_edgerouter-x
   portosanto_router:
     image: openwrt/imagebuilder:mediatek-filogic-${OPENWRT_VERSION}
