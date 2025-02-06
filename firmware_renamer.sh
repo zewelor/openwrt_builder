@@ -24,21 +24,17 @@ NEW_NAME_PART=$(echo "$1" | sed 's/[-_]/-/g')
 SYS_PATTERN="*$(echo "$1" | sed 's/[-_]/\?/g')*sysupgrade.bin"
 FACTORY_PATTERN="*$(echo "$1" | sed 's/[-_]/\?/g')*factory.bin"
 
-echo "Looking for files matching patterns '${SYS_PATTERN}' or '${FACTORY_PATTERN}' in the directory '${DIR}'"
-
-# Find a matching file for either suffix
-FILE_TO_RENAME=$(find "${DIR}" -type f \( -name "${SYS_PATTERN}" -o -name "${FACTORY_PATTERN}" \) -print -quit)
-
-# Check if the file was found
-if [[ -z $FILE_TO_RENAME ]]; then
-    echo "No file to rename matching the patterns."
-    exit 1
-fi
-
-# Determine the suffix based on the found file's name
-if [[ $FILE_TO_RENAME == *sysupgrade.bin ]]; then
+echo "Looking for file matching pattern '${SYS_PATTERN}' in the directory '${DIR}'"
+FILE_TO_RENAME=$(find "${DIR}" -type f -name "${SYS_PATTERN}" -print -quit)
+if [[ -n $FILE_TO_RENAME ]]; then
     SUFFIX="sysupgrade.bin"
-elif [[ $FILE_TO_RENAME == *factory.bin ]]; then
+else
+    echo "No sysupgrade.bin found. Looking for file matching pattern '${FACTORY_PATTERN}'"
+    FILE_TO_RENAME=$(find "${DIR}" -type f -name "${FACTORY_PATTERN}" -print -quit)
+    if [[ -z $FILE_TO_RENAME ]]; then
+        echo "No file to rename matching the patterns."
+        exit 1
+    fi
     SUFFIX="factory.bin"
 fi
 
