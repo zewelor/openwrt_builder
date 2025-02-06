@@ -31,7 +31,7 @@ jobs:
           done
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "output/*.bin"
+          artifacts: "output/*-sysupgrade.bin,output/*-factory.bin"
           allowUpdates: true
           makeLatest: true
           tag: ${{ steps.read_version.outputs.openwrt_version }}
