@@ -1,44 +1,62 @@
 #!/bin/bash
 
-# Usage: ./rename_script.sh new_name_part
+# Usage: ./rename_script.sh new_name_part [--dry-run]
 # Example: ./rename_script.sh summerhouse-router
 
 # Exit on any error
 set -e
 
-# Check for the correct number of arguments
-if [ "$#" -ne 1 ]; then
+# Support for help flag
+if [ "$1" = "--help" ]; then
+    echo "Usage: $0 new_name_part [--dry-run]"
+    exit 0
+fi
+
+# Updated argument check: require one or two arguments
+if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
     echo "Illegal number of parameters"
-    echo "Usage: $0 new_name_part"
+    echo "Usage: $0 new_name_part [--dry-run]"
     exit 1
 fi
 
-# Directory where the file is located
-DIR="output"
-
-# The provided part of the new file name, replacing '-' and '_' with '*'
-# This makes the pattern more flexible to match both characters
-NEW_NAME_PART=$(echo "$1" | sed 's/[-_]/-/g')
-
-# Construct patterns for sysupgrade.bin and factory.bin
-SYS_PATTERN="*$(echo "$1" | sed 's/[-_]/\?/g')*sysupgrade.bin"
-FACTORY_PATTERN="*$(echo "$1" | sed 's/[-_]/\?/g')*factory.bin"
-
-echo "Looking for file matching pattern '${SYS_PATTERN}' in the directory '${DIR}'"
-FILE_TO_RENAME=$(find "${DIR}" -type f -name "${SYS_PATTERN}" -print -quit)
-if [[ -n $FILE_TO_RENAME ]]; then
-    SUFFIX="sysupgrade.bin"
-else
-    echo "No sysupgrade.bin found. Looking for file matching pattern '${FACTORY_PATTERN}'"
-    FILE_TO_RENAME=$(find "${DIR}" -type f -name "${FACTORY_PATTERN}" -print -quit)
-    if [[ -z $FILE_TO_RENAME ]]; then
-        echo "No file to rename matching the patterns."
-        exit 1
-    fi
-    SUFFIX="factory.bin"
+# Determine if dry run is enabled
+DRY_RUN=0
+if [ "$#" -eq 2 ] && [ "$2" = "--dry-run" ]; then
+    DRY_RUN=1
 fi
 
-# Rename the file
-mv "${FILE_TO_RENAME}" "${DIR}/${NEW_NAME_PART}-${SUFFIX}"
+# Check if output directory exists
+DIR="output"
+if [ ! -d "${DIR}" ]; then
+    echo "Directory '${DIR}' does not exist."
+    exit 1
+fi
 
-echo "${FILE_TO_RENAME} -> ${NEW_NAME_PART}-${SUFFIX}"
+# Consolidate pattern transformation
+SANITIZED_NAME=$(echo "$1" | sed 's/[-_]/-/g')
+PATTERN_CORE=$(echo "$1" | sed 's/[-_]/\?/g')
+
+# Construct patterns for sysupgrade.bin, sysupgrade.itb, and factory.bin
+SYS_PATTERN_BIN="*${PATTERN_CORE}*sysupgrade.bin"
+SYS_PATTERN_ITB="*${PATTERN_CORE}*sysupgrade.itb"
+FACTORY_PATTERN="*${PATTERN_CORE}*factory.bin"
+
+# if-elif-else chain to determine the file to rename
+if FILE_TO_RENAME=$(find "${DIR}" -type f -name "${SYS_PATTERN_BIN}" -print -quit) && [[ -n $FILE_TO_RENAME ]]; then
+    SUFFIX="sysupgrade.bin"
+elif FILE_TO_RENAME=$(find "${DIR}" -type f -name "${SYS_PATTERN_ITB}" -print -quit) && [[ -n $FILE_TO_RENAME ]]; then
+    SUFFIX="sysupgrade.itb"
+elif FILE_TO_RENAME=$(find "${DIR}" -type f -name "${FACTORY_PATTERN}" -print -quit) && [[ -n $FILE_TO_RENAME ]]; then
+    SUFFIX="factory.bin"
+else
+    echo "No file to rename matching the patterns."
+    exit 1
+fi
+
+# Dry run check: print action instead of executing mv
+if [[ $DRY_RUN -eq 1 ]]; then
+    echo "[Dry Run] Would execute: mv \"${FILE_TO_RENAME}\" \"${DIR}/${SANITIZED_NAME}-${SUFFIX}\""
+else
+    mv "${FILE_TO_RENAME}" "${DIR}/${SANITIZED_NAME}-${SUFFIX}"
+    echo "${FILE_TO_RENAME} -> ${SANITIZED_NAME}-${SUFFIX}"
+fi
