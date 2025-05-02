@@ -125,9 +125,9 @@ SUFFIXES=()
 # Modified patterns to match OpenWrt filename format
 PATTERNS_TO_TRY=(
     # Simple matches for already renamed files
-    "*${NAME}*factory.bin"
-    "*${NAME}*sysupgrade.bin"
-    "*${NAME}*sysupgrade.itb"
+    "*${SANITIZED_NAME}*factory.bin"
+    "*${SANITIZED_NAME}*sysupgrade.bin"
+    "*${SANITIZED_NAME}*sysupgrade.itb"
 )
 
 SUFFIXES_TO_TRY=(
