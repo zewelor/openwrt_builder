@@ -50,11 +50,9 @@ rename_file() {
 
     if [[ $is_dry_run -eq 1 ]]; then
         echo "[Dry Run] Would execute: mv \"${source}\" \"${target}\""
-        return 0
     else
         mv "${source}" "${target}"
-        echo "${source} -> $(basename "${target}")"
-        return 1
+        echo "${source} -> ${target}"
     fi
 }
 
