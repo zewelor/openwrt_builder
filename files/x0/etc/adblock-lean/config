@@ -1,0 +1,3 @@
+config adblock-lean 'global'
+	option enabled '1'
+	list blocklist_sources 'hagezi_pro'
