@@ -40,7 +40,7 @@ services:
   summerhouse_router:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:
-      - ./files/summerhouse_rack:/mnt/files/
+      - ./files/summerhouse_router:/mnt/files/
       - ./output:${OUTPUT_DIR}
     # -odhcpd-ipv6only for unbound
     command: >

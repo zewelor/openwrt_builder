@@ -12,7 +12,6 @@ ifneq (,$(wildcard ./.env))
   export
 endif
 
-# all: clean ap_michal ap_basement summerhouse_rack x0
 all: clean $(SERVICES)
 
 ap_michal:
