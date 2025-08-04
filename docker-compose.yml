@@ -66,17 +66,19 @@ services:
   x0:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:
-      # - ./files/summerhouse_rack:/mnt/files/
+      - ./files/x0:/mnt/files/
       - ./output:${OUTPUT_DIR}
     command: >
       make image
+      FILES="/mnt/files/"
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="x0"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} #{PACKAGES_ADBLOCK} avahi-daemon"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} avahi-daemon"
       PROFILE=ubnt_edgerouter-x
   portosanto_router:
     image: openwrt/imagebuilder:mediatek-filogic-${OPENWRT_VERSION}
     volumes:
+      - ./files/portosanto_router:/mnt/files/
       - ./output:${OUTPUT_DIR}
     command: >
       make image
