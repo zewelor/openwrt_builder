@@ -21,6 +21,80 @@ jobs:
           make
           ls -lah output
       # I wanto to register to github env value of file VERSION
+      - name: Install verification tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y binwalk squashfs-tools elfutils file
+
+      - name: Verify OpenWrt images (init, musl loader, core libs)
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          shopt -s nullglob
+          rc=0
+
+          for IMG in output/*-sysupgrade.*; do
+            echo "==> Verifying $IMG"
+            workdir="$(mktemp -d)"
+            pushd "$workdir" >/dev/null
+
+            # Extract squashfs from sysupgrade image
+            binwalk --quiet --dd 'squashfs:rootfs.squashfs' "$GITHUB_WORKSPACE/$IMG" || true
+            if [[ ! -f rootfs.squashfs ]]; then
+              echo "::error file=$IMG::No squashfs filesystem found in sysupgrade image"
+              rc=1
+              popd >/dev/null; rm -rf "$workdir"
+              continue
+            fi
+
+            # Unpack rootfs
+            unsquashfs -d rootfs rootfs.squashfs >/dev/null
+
+            # 1) Basic executables present
+            [[ -e rootfs/sbin/init ]] || { echo "::error file=$IMG::Missing /sbin/init"; rc=1; }
+            [[ -e rootfs/sbin/procd ]] || { echo "::error file=$IMG::Missing /sbin/procd"; rc=1; }
+            [[ -e rootfs/bin/sh ]]     || { echo "::error file=$IMG::Missing /bin/sh"; rc=1; }
+            [[ -e rootfs/bin/busybox ]]|| { echo "::warning file=$IMG::Missing /bin/busybox (unexpected)"; }
+
+            # 2) procd is dynamically linked and declares a musl interpreter
+            if readelf -l rootfs/sbin/procd | grep -q 'Requesting program interpreter:'; then
+              interp="$(readelf -l rootfs/sbin/procd | awk -F': ' '/Requesting program interpreter/ {print $2}')"
+              interp_rel="${interp#/}"                      # strip leading /
+              if [[ -z "$interp" ]]; then
+                echo "::error file=$IMG::Could not determine dynamic loader for procd"
+                rc=1
+              else
+                if [[ ! -e "rootfs/$interp_rel" ]]; then
+                  echo "::error file=$IMG::Missing dynamic loader $interp (musl) referenced by procd"
+                  rc=1
+                fi
+              fi
+            else
+              echo "::error file=$IMG::procd appears not dynamically linked (no interpreter found)"
+              rc=1
+            fi
+
+            # 3) Core libs used by procd / base init stack are present
+            need_libs=("libubox" "libubus" "libjson-c")
+            for base in "${need_libs[@]}"; do
+              if ! compgen -G "rootfs/lib/${base}.so*" > /dev/null; then
+                echo "::error file=$IMG::Missing rootfs/lib/${base}.so*"
+                rc=1
+              fi
+            done
+
+            # 4) Optional: show sizes for visibility (doesn't fail build)
+            echo "Image size: $(stat -c%s "$GITHUB_WORKSPACE/$IMG") bytes"
+            echo "Squashfs size: $(stat -c%s rootfs.squashfs) bytes"
+
+            popd >/dev/null
+            rm -rf "$workdir"
+          done
+
+          if [[ $rc -ne 0 ]]; then
+            echo "::error::Verification failed for one or more images."
+            exit $rc
+          fi
       - name: Read VERSION file
         id: read_version
         run: echo "openwrt_version=$(cat VERSION)" >> $GITHUB_OUTPUT
