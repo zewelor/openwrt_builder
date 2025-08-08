@@ -2,9 +2,6 @@
 clean:
     rm -rf ./output/*
 
-# Build all targets
-all: clean summerhouse_router x0 ap_basement ap_michal parents_router portosanto_router
-
 # Recipes for each service
 summerhouse_router:
     docker compose pull summerhouse_router ; docker compose run --rm summerhouse_router
