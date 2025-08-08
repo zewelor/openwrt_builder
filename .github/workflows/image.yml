@@ -7,28 +7,56 @@ on:
       - 'master'
 
 jobs:
-  build_images:
+  prepare:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: set-matrix
+        run: |
+          services=$(docker compose config --services | jq -R -s -c 'split("\n")[:-1]')
+          echo "matrix={\"service\":$services}" >> $GITHUB_OUTPUT
+
+  build:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJson(needs.prepare.outputs.matrix) }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Build all images
+      - name: Build ${{ matrix.service }}
         env:
           DOCKER_BUILDKIT: 1
           COMPOSE_DOCKER_CLI_BUILD: 1
         run: |
           chmod a+w output
-          make
-          ls -lah output
-      # I wanto to register to github env value of file VERSION
+          rm -rf output/*
+          docker compose pull ${{ matrix.service }}
+          docker compose run --rm ${{ matrix.service }}
+      - name: Rename output files
+        run: ./firmware_renamer.sh "${{ matrix.service }}"
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.service }}
+          path: output/*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Read VERSION file
         id: read_version
         run: echo "openwrt_version=$(cat VERSION)" >> $GITHUB_OUTPUT
-      - name: Rename output files for release
-        run: |
-          grep -E '^[[:space:]]*[^#[:space:]]' docker-compose.yml | grep 'EXTRA_IMAGE_NAME' | awk -F\" '{print $2}' | while IFS= read -r line; do
-            ./firmware_renamer.sh "${line}"
-          done
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: output
+          merge-multiple: true
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "output/*-sysupgrade.*,output/*-factory.bin"
