@@ -64,3 +64,7 @@ jobs:
           makeLatest: true
           tag: ${{ steps.read_version.outputs.openwrt_version }}
           token: ${{ secrets.PAT }}
+      - name: Delete workflow artifacts
+        uses: GeekyEggo/delete-artifact@v5
+        with:
+          name: '*'
