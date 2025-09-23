@@ -85,7 +85,7 @@ services:
       FILES="/mnt/files/"
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="portosanto_router"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_PROMETHEUS} ${PACKAGES_VPN} ${PACKAGES_DOCKER} ${PACKAGES_PYTHON}"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_PROMETHEUS} ${PACKAGES_VPN} ${PACKAGES_PYTHON}"
       PROFILE=glinet_gl-mt6000
   # porto_santo:
   # mediatek/filogic/ - glinet_gl-mt6000
