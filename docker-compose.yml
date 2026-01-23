@@ -11,7 +11,7 @@ services:
       EXTRA_IMAGE_NAME="ap_michal"
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_NON_ROUTER} ${PACKAGES_PROMETHEUS}"
       PROFILE=xiaomi_redmi-router-ax6s
-      DISABLED_SERVICES="firewall"
+      DISABLED_SERVICES="firewall odhcpd"
   ap_basement:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:
@@ -24,7 +24,7 @@ services:
       EXTRA_IMAGE_NAME="ap_basement"
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_NON_ROUTER} ${PACKAGES_PROMETHEUS}"
       PROFILE=xiaomi_mi-router-4a-gigabit
-      DISABLED_SERVICES="firewall"
+      DISABLED_SERVICES="firewall odhcpd"
   parents_router:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:
@@ -35,7 +35,7 @@ services:
       FILES="/mnt/files/"
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="parents_router"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_PROMETHEUS} ${PACKAGES_VPN}"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS}"
       PROFILE=xiaomi_mi-router-4a-gigabit
   summerhouse_router:
     image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
