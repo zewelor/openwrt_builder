@@ -38,7 +38,7 @@ jobs:
       - name: Rename output files
         run: ./firmware_renamer.sh "${{ matrix.service }}"
       - name: Upload artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.service }}
           path: output/*
