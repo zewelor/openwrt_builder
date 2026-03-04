@@ -1,0 +1,12 @@
+{
+  "user": {
+    "description": "Read only user access role",
+    "read": {
+      "ubus": {
+        "*": [ "*" ]
+      },
+      "uci": [ "*" ]
+    },
+    "write": {}
+  }
+}
