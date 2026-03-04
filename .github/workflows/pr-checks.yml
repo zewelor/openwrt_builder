@@ -1,0 +1,22 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Validate GitHub Actions workflows
+        uses: rhysd/actionlint@v1
+
+      - name: Validate Docker Compose configuration
+        run: docker compose config --quiet
