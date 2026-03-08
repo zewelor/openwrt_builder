@@ -7,3 +7,4 @@ When adding new host:
 
 OpenWrt version is configured in `.env` as `OPENWRT_VERSION`.
 When bumping OpenWrt, update `.env` only.
+`Build images` ignores README-only changes and workflow changes outside `.github/workflows/image.yml`; on relevant pushes it refreshes the current `OPENWRT_VERSION` release tag.

@@ -5,6 +5,11 @@ on:
   push:
     branches:
       - 'master'
+    paths:
+      - '**'
+      - '!README.md'
+      - '!.github/workflows/**'
+      - '.github/workflows/image.yml'
 
 jobs:
   prepare:
@@ -49,6 +54,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.PAT }}
       - name: Read OpenWrt version
         id: read_version
         run: |
@@ -58,6 +65,12 @@ jobs:
             exit 1
           fi
           echo "openwrt_version=$version" >> "$GITHUB_OUTPUT"
+      - name: Move release tag to current commit
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git tag -fa "${{ steps.read_version.outputs.openwrt_version }}" -m "Release ${{ steps.read_version.outputs.openwrt_version }}" "$GITHUB_SHA"
+          git push --force origin "refs/tags/${{ steps.read_version.outputs.openwrt_version }}"
       - name: Download artifacts
         uses: actions/download-artifact@v8
         with:
