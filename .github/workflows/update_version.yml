@@ -27,21 +27,27 @@ jobs:
           repo: openwrt
           excludes: prerelease, draft
 
-      - name: Update VERSION
+      - name: Update .env version
         run: |
-          set -xe
+          set -euo pipefail
 
-          echo "${{ steps.latest_version.outputs.release }}" | cut -d 'v' -f2 > VERSION
-          VERSION=$(cat VERSION)
-          git add VERSION
+          VERSION="${{ steps.latest_version.outputs.release }}"
+          VERSION="${VERSION#v}"
 
-          sed -i -e "s/OPENWRT_VERSION=.*$/OPENWRT_VERSION=${VERSION}/g" .env
+          if ! grep -q '^OPENWRT_VERSION=' .env; then
+            echo "OPENWRT_VERSION not found in .env" >&2
+            exit 1
+          fi
+
+          sed -i -e "s/^OPENWRT_VERSION=.*/OPENWRT_VERSION=${VERSION}/" .env
           git add .env
 
-          set +e
-          git commit -m "Bump version ${VERSION} from GitHub Actions"
-          git tag -a ${VERSION} -m "Release ${VERSION}"
-          git push origin --tags
-          set -e
+          if git diff --cached --quiet; then
+            echo "OPENWRT_VERSION already set to ${VERSION}"
+            exit 0
+          fi
 
+          git commit -m "Bump version ${VERSION} from GitHub Actions"
+          git tag -a "${VERSION}" -m "Release ${VERSION}"
+          git push origin --tags
           git push origin

@@ -49,9 +49,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Read VERSION file
+      - name: Read OpenWrt version
         id: read_version
-        run: echo "openwrt_version=$(cat VERSION)" >> $GITHUB_OUTPUT
+        run: |
+          version="$(grep '^OPENWRT_VERSION=' .env | cut -d= -f2-)"
+          if [ -z "$version" ]; then
+            echo "OPENWRT_VERSION not found in .env" >&2
+            exit 1
+          fi
+          echo "openwrt_version=$version" >> "$GITHUB_OUTPUT"
       - name: Download artifacts
         uses: actions/download-artifact@v8
         with:
