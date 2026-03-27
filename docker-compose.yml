@@ -1,6 +1,6 @@
 services:
   ap_michal:
-    image: openwrt/imagebuilder:mediatek-mt7622-${OPENWRT_VERSION}
+    image: ghcr.io/openwrt/imagebuilder:mediatek-mt7622-${OPENWRT_VERSION}
     volumes:
       - ./files/ap_michal:/mnt/files/
       - ./output:${OUTPUT_DIR}
@@ -13,7 +13,7 @@ services:
       PROFILE=xiaomi_redmi-router-ax6s
       DISABLED_SERVICES="firewall odhcpd"
   ap_basement:
-    image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
+    image: ghcr.io/openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:
       - ./files/ap_basement:/mnt/files/
       - ./output:${OUTPUT_DIR}
@@ -26,7 +26,7 @@ services:
       PROFILE=xiaomi_mi-router-4a-gigabit
       DISABLED_SERVICES="firewall odhcpd"
   parents_router:
-    image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
+    image: ghcr.io/openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:
       - ./files/parents:/mnt/files/
       - ./output:${OUTPUT_DIR}
@@ -38,7 +38,7 @@ services:
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS}"
       PROFILE=xiaomi_mi-router-4a-gigabit
   summerhouse_router:
-    image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
+    image: ghcr.io/openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:
       - ./files/summerhouse_router:/mnt/files/
       - ./output:${OUTPUT_DIR}
@@ -52,7 +52,7 @@ services:
       PROFILE=xiaomi_mi-router-3g
   # Migrated to glinet and uses its firmware for now
   # travel_router:
-  #   image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
+  #   image: ghcr.io/openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
   #   volumes:
   #     - ./files/travel_router:/mnt/files/
   #     - ./output:${OUTPUT_DIR}
@@ -64,7 +64,7 @@ services:
   #     PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} adguardhome qrencode travelmate luci-app-travelmate"
   #     PROFILE=xiaomi_mi-router-3g
   x0:
-    image: openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
+    image: ghcr.io/openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:
       - ./files/x0:/mnt/files/
       - ./output:${OUTPUT_DIR}
@@ -76,7 +76,7 @@ services:
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} avahi-daemon"
       PROFILE=ubnt_edgerouter-x
   portosanto_router:
-    image: openwrt/imagebuilder:mediatek-filogic-${OPENWRT_VERSION}
+    image: ghcr.io/openwrt/imagebuilder:mediatek-filogic-${OPENWRT_VERSION}
     volumes:
       - ./files/portosanto_router:/mnt/files/
       - ./output:${OUTPUT_DIR}
