@@ -9,7 +9,7 @@ services:
       FILES="/mnt/files/"
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="ap_michal"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_NON_ROUTER} ${PACKAGES_PROMETHEUS} ${PACKAGES_FULL_WPAD}"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_NON_ROUTER} ${PACKAGES_PROMETHEUS} ${PACKAGES_PROMETHEUS_WIFI} ${PACKAGES_FULL_WPAD}"
       PROFILE=xiaomi_redmi-router-ax6s
       DISABLED_SERVICES="firewall odhcpd"
   ap_basement:
@@ -22,7 +22,7 @@ services:
       FILES="/mnt/files/"
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="ap_basement"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_NON_ROUTER} ${PACKAGES_PROMETHEUS} ${PACKAGES_FULL_WPAD}"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_NON_ROUTER} ${PACKAGES_PROMETHEUS} ${PACKAGES_PROMETHEUS_WIFI} ${PACKAGES_FULL_WPAD}"
       PROFILE=xiaomi_mi-router-4a-gigabit
       DISABLED_SERVICES="firewall odhcpd"
   parents_router:
@@ -35,7 +35,7 @@ services:
       FILES="/mnt/files/"
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="parents_router"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS}"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} ${PACKAGES_PROMETHEUS_WIFI}"
       PROFILE=xiaomi_mi-router-4a-gigabit
   summerhouse_router:
     image: ghcr.io/openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
@@ -48,7 +48,7 @@ services:
       BIN_DIR="${OUTPUT_DIR}"
       FILES="/mnt/files/"
       EXTRA_IMAGE_NAME="summerhouse_router"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} ${PACKAGES_UBUS_HA_SCANNER} mosquitto-nossl ca-bundle luci-app-unbound luci-app-adblock unbound-control unbound-checkconf odhcpd -dnsmasq -odhcpd-ipv6only"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} ${PACKAGES_PROMETHEUS_WIFI} ${PACKAGES_UBUS_HA_SCANNER} mosquitto-nossl ca-bundle luci-app-unbound luci-app-adblock unbound-control unbound-checkconf odhcpd -dnsmasq -odhcpd-ipv6only"
       PROFILE=xiaomi_mi-router-3g
   # Migrated to glinet and uses its firmware for now
   # travel_router:
@@ -73,7 +73,7 @@ services:
       FILES="/mnt/files/"
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="x0"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} avahi-daemon"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} avahi-daemon igmpproxy"
       PROFILE=ubnt_edgerouter-x
   portosanto_router:
     image: ghcr.io/openwrt/imagebuilder:mediatek-filogic-${OPENWRT_VERSION}
@@ -85,7 +85,7 @@ services:
       FILES="/mnt/files/"
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="portosanto_router"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_PROMETHEUS} ${PACKAGES_VPN} ${PACKAGES_DOCKER} ${PACKAGES_PYTHON} ${PACKAGES_FULL_WPAD} avahi-daemon"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_PROMETHEUS} ${PACKAGES_PROMETHEUS_WIFI} ${PACKAGES_VPN} ${PACKAGES_DOCKER} ${PACKAGES_PYTHON} ${PACKAGES_FULL_WPAD} avahi-daemon"
       PROFILE=glinet_gl-mt6000
   # porto_santo:
   # mediatek/filogic/ - glinet_gl-mt6000
