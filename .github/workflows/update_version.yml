@@ -21,18 +21,15 @@ jobs:
           git config user.email github-actions@github.com
 
       - id: latest_version
-        uses: pozetroninc/github-action-get-latest-release@master
-        with:
-          owner: openwrt
-          repo: openwrt
-          excludes: prerelease, draft
+        run: |
+          VERSION=$(curl -s https://api.github.com/repos/openwrt/openwrt/releases/latest | jq -r '.tag_name' | sed 's/^v//')
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Update .env version
         run: |
           set -euo pipefail
 
-          VERSION="${{ steps.latest_version.outputs.release }}"
-          VERSION="${VERSION#v}"
+          VERSION="${{ steps.latest_version.outputs.version }}"
 
           if ! grep -q '^OPENWRT_VERSION=' .env; then
             echo "OPENWRT_VERSION not found in .env" >&2

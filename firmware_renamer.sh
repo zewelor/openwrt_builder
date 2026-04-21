@@ -107,7 +107,7 @@ fi
 # List all files in output directory for debugging
 if [[ $DEBUG -eq 1 ]]; then
     echo "Files in output directory:"
-    find "$DIR" -type f -name "*.bin" -o -name "*.itb" | sort | while read -r file; do
+    find "$DIR" -type f \( -name "*.bin" -o -name "*.itb" \) | sort | while read -r file; do
         echo "  $(basename "$file")"
     done
 fi
@@ -177,7 +177,7 @@ for ((i=0; i<${#FILES_TO_RENAME[@]}; i++)); do
 
     # Rename the file and update count if successful
     rename_file "$FILE_TO_RENAME" "$TARGET_FILENAME" "$DRY_RUN"
-    RENAMED_COUNT=$((RENAMED_COUNT+$?))
+    RENAMED_COUNT=$((RENAMED_COUNT+1))
 done
 
 # Show summary based on dry run mode
