@@ -73,7 +73,7 @@ services:
       FILES="/mnt/files/"
       BIN_DIR="${OUTPUT_DIR}"
       EXTRA_IMAGE_NAME="x0"
-      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} avahi-daemon igmpproxy"
+      PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_VPN} ${PACKAGES_PROMETHEUS} ${PACKAGES_VLAN}
       PROFILE=ubnt_edgerouter-x
   portosanto_router:
     image: ghcr.io/openwrt/imagebuilder:mediatek-filogic-${OPENWRT_VERSION}
