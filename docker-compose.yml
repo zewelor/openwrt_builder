@@ -11,7 +11,7 @@ services:
       EXTRA_IMAGE_NAME="ap_michal"
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_NON_ROUTER} ${PACKAGES_PROMETHEUS} ${PACKAGES_PROMETHEUS_WIFI} ${PACKAGES_FULL_WPAD}"
       PROFILE=xiaomi_redmi-router-ax6s
-      DISABLED_SERVICES="firewall odhcpd"
+      DISABLED_SERVICES="firewall odhcpd cron"
   ap_basement:
     image: ghcr.io/openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:
@@ -24,7 +24,7 @@ services:
       EXTRA_IMAGE_NAME="ap_basement"
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_NON_ROUTER} ${PACKAGES_PROMETHEUS} ${PACKAGES_PROMETHEUS_WIFI} ${PACKAGES_FULL_WPAD}"
       PROFILE=xiaomi_mi-router-4a-gigabit
-      DISABLED_SERVICES="firewall odhcpd"
+      DISABLED_SERVICES="firewall odhcpd cron"
   parents_router:
     image: ghcr.io/openwrt/imagebuilder:ramips-mt7621-${OPENWRT_VERSION}
     volumes:
