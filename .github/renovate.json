@@ -6,17 +6,18 @@
   "customManagers": [
     {
       "customType": "regex",
-      "description": "Update OpenWrt version in .env",
+      "description": "Update OPENWRT_VERSION from the x86-64 imagebuilder tag. x86-64 is only a proxy that Docker imagebuilder publishing has started; CI still builds the real router targets from docker-compose.yml.",
       "managerFilePatterns": [
         "/^\\.env$/"
       ],
       "matchStrings": [
         "OPENWRT_VERSION=(?<currentValue>[^\\s]+)"
       ],
-      "depNameTemplate": "openwrt/openwrt",
-      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "OpenWrt imagebuilder x86-64",
+      "packageNameTemplate": "ghcr.io/openwrt/imagebuilder",
+      "datasourceTemplate": "docker",
       "versioningTemplate": "semver",
-      "extractVersionTemplate": "^v?(?<version>.*)$"
+      "extractVersionTemplate": "^x86-64-(?<version>\\d+\\.\\d+\\.\\d+)$"
     }
   ],
   "packageRules": [
@@ -29,7 +30,7 @@
     },
     {
       "description": "Automerge OpenWrt release updates",
-      "matchPackageNames": ["openwrt/openwrt"],
+      "matchPackageNames": ["ghcr.io/openwrt/imagebuilder"],
       "groupName": "OpenWrt version",
       "automerge": true,
       "platformAutomerge": true
