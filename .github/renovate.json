@@ -3,11 +3,34 @@
   "extends": [
     "config:recommended"
   ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update OpenWrt version in .env",
+      "managerFilePatterns": [
+        "/^\\.env$/"
+      ],
+      "matchStrings": [
+        "OPENWRT_VERSION=(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "openwrt/openwrt",
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver",
+      "extractVersionTemplate": "^v?(?<version>.*)$"
+    }
+  ],
   "packageRules": [
     {
       "description": "Group and automerge all updates for GitHub Actions",
       "matchManagers": ["github-actions"],
       "groupName": "GitHub Actions dependencies",
+      "automerge": true,
+      "platformAutomerge": true
+    },
+    {
+      "description": "Automerge OpenWrt release updates",
+      "matchPackageNames": ["openwrt/openwrt"],
+      "groupName": "OpenWrt version",
       "automerge": true,
       "platformAutomerge": true
     }
