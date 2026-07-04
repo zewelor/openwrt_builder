@@ -35,11 +35,9 @@ jobs:
         uses: actions/cache@v6
         with:
           path: apk_cache
-          key: apk-cache-${{ matrix.service }}-${{ hashFiles('.env') }}-${{ github.run_id }}
+          key: apk-cache-${{ matrix.service }}-${{ hashFiles('.env', 'docker-compose.yml') }}
           restore-keys: |
-            apk-cache-${{ matrix.service }}-${{ hashFiles('.env') }}-
             apk-cache-${{ matrix.service }}-
-            apk-cache-
       - name: Build ${{ matrix.service }}
         env:
           DOCKER_BUILDKIT: 1
