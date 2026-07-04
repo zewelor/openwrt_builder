@@ -4,6 +4,7 @@ services:
     volumes:
       - ./files/ap_michal:/mnt/files/
       - ./output:${OUTPUT_DIR}
+      - ./apk_cache:/builder/dl
     command: >
       make image
       FILES="/mnt/files/"
@@ -17,6 +18,7 @@ services:
     volumes:
       - ./files/ap_basement:/mnt/files/
       - ./output:${OUTPUT_DIR}
+      - ./apk_cache:/builder/dl
     command: >
       make image
       FILES="/mnt/files/"
@@ -30,6 +32,7 @@ services:
     volumes:
       - ./files/parents:/mnt/files/
       - ./output:${OUTPUT_DIR}
+      - ./apk_cache:/builder/dl
     command: >
       make image
       FILES="/mnt/files/"
@@ -42,6 +45,7 @@ services:
     volumes:
       - ./files/summerhouse_router:/mnt/files/
       - ./output:${OUTPUT_DIR}
+      - ./apk_cache:/builder/dl
     # -odhcpd-ipv6only for unbound
     command: >
       make image
@@ -68,6 +72,7 @@ services:
     volumes:
       - ./files/x0:/mnt/files/
       - ./output:${OUTPUT_DIR}
+      - ./apk_cache:/builder/dl
     command: >
       make image
       FILES="/mnt/files/"
@@ -80,6 +85,7 @@ services:
     volumes:
       - ./files/portosanto_router:/mnt/files/
       - ./output:${OUTPUT_DIR}
+      - ./apk_cache:/builder/dl
     command: >
       make image
       FILES="/mnt/files/"
@@ -87,3 +93,5 @@ services:
       EXTRA_IMAGE_NAME="portosanto_router"
       PACKAGES="${PACKAGES_DEFAULT} ${PACKAGES_REMOVE_PPP} ${PACKAGES_PROMETHEUS} ${PACKAGES_PROMETHEUS_WIFI} ${PACKAGES_VPN} ${PACKAGES_DOCKER} ${PACKAGES_PYTHON} ${PACKAGES_FULL_WPAD}  ${PACKAGES_MDNS}"
       PROFILE=glinet_gl-mt6000
+
+# Dummy comment to test workflow cache speedup

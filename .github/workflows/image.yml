@@ -31,11 +31,22 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+      - name: Cache APK packages
+        uses: actions/cache@v6
+        with:
+          path: apk_cache
+          key: apk-cache-${{ matrix.service }}-${{ hashFiles('.env') }}-${{ github.run_id }}
+          restore-keys: |
+            apk-cache-${{ matrix.service }}-${{ hashFiles('.env') }}-
+            apk-cache-${{ matrix.service }}-
+            apk-cache-
       - name: Build ${{ matrix.service }}
         env:
           DOCKER_BUILDKIT: 1
           COMPOSE_DOCKER_CLI_BUILD: 1
         run: |
+          mkdir -p apk_cache
+          chmod a+w apk_cache
           chmod a+w output
           rm -rf output/*
           docker compose pull ${{ matrix.service }}
